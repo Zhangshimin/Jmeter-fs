@@ -1,0 +1,1042 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jmeterTestPlan version="1.2" properties="2.9" jmeter="3.0 r1743807">
+  <hashTree>
+    <TestPlan guiclass="TestPlanGui" testclass="TestPlan" testname="测试计划" enabled="true">
+      <stringProp name="TestPlan.comments"></stringProp>
+      <boolProp name="TestPlan.functional_mode">false</boolProp>
+      <boolProp name="TestPlan.serialize_threadgroups">false</boolProp>
+      <elementProp name="TestPlan.user_defined_variables" elementType="Arguments" guiclass="ArgumentsPanel" testclass="Arguments" testname="用户定义的变量" enabled="true">
+        <collectionProp name="Arguments.arguments"/>
+      </elementProp>
+      <stringProp name="TestPlan.user_define_classpath">/Users/dliu/Downloads/apache-jmeter-3.0/lib/ext/cspPerfanceTesting.jar</stringProp>
+    </TestPlan>
+    <hashTree>
+      <ResultCollector guiclass="StatVisualizer" testclass="ResultCollector" testname="聚合报告" enabled="true">
+        <boolProp name="ResultCollector.error_logging">false</boolProp>
+        <objProp>
+          <name>saveConfig</name>
+          <value class="SampleSaveConfiguration">
+            <time>true</time>
+            <latency>true</latency>
+            <timestamp>true</timestamp>
+            <success>true</success>
+            <label>true</label>
+            <code>true</code>
+            <message>true</message>
+            <threadName>true</threadName>
+            <dataType>true</dataType>
+            <encoding>false</encoding>
+            <assertions>true</assertions>
+            <subresults>true</subresults>
+            <responseData>false</responseData>
+            <samplerData>false</samplerData>
+            <xml>false</xml>
+            <fieldNames>true</fieldNames>
+            <responseHeaders>false</responseHeaders>
+            <requestHeaders>false</requestHeaders>
+            <responseDataOnError>false</responseDataOnError>
+            <saveAssertionResultsFailureMessage>true</saveAssertionResultsFailureMessage>
+            <assertionsResultsToSave>0</assertionsResultsToSave>
+            <bytes>true</bytes>
+            <threadCounts>true</threadCounts>
+            <idleTime>true</idleTime>
+          </value>
+        </objProp>
+        <stringProp name="filename">/Users/dliu/Documents/20160713151412.jtl</stringProp>
+      </ResultCollector>
+      <hashTree/>
+      <Arguments guiclass="ArgumentsPanel" testclass="Arguments" testname="UserParams" enabled="true">
+        <collectionProp name="Arguments.arguments">
+          <elementProp name="loopnum" elementType="Argument">
+            <stringProp name="Argument.name">loopnum</stringProp>
+            <stringProp name="Argument.value">50</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="threadnum" elementType="Argument">
+            <stringProp name="Argument.name">threadnum</stringProp>
+            <stringProp name="Argument.value">20</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="usertag1" elementType="Argument">
+            <stringProp name="Argument.name">usertag1</stringProp>
+            <stringProp name="Argument.value">isvtest</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="usertag2" elementType="Argument">
+            <stringProp name="Argument.name">usertag2</stringProp>
+            <stringProp name="Argument.value">testAdmin</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="usertag3" elementType="Argument">
+            <stringProp name="Argument.name">usertag3</stringProp>
+            <stringProp name="Argument.value">testRegular</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+        </collectionProp>
+      </Arguments>
+      <hashTree/>
+      <TestFragmentController guiclass="TestFragmentControllerGui" testclass="TestFragmentController" testname="body" enabled="true"/>
+      <hashTree>
+        <BeanShellSampler guiclass="BeanShellSamplerGui" testclass="BeanShellSampler" testname="GenCustomerAppBody" enabled="false">
+          <stringProp name="BeanShellSampler.query">//System.out.println(&quot;gen dataForCustomerAppBody:&quot;+vars.getObject(&quot;data_1&quot;));</stringProp>
+          <stringProp name="BeanShellSampler.filename"></stringProp>
+          <stringProp name="BeanShellSampler.parameters"></stringProp>
+          <boolProp name="BeanShellSampler.resetInterpreter">false</boolProp>
+        </BeanShellSampler>
+        <hashTree>
+          <BeanShellPreProcessor guiclass="TestBeanGUI" testclass="BeanShellPreProcessor" testname="GenDataForCustomerAndCustomerApp" enabled="true">
+            <boolProp name="resetInterpreter">false</boolProp>
+            <stringProp name="parameters"></stringProp>
+            <stringProp name="filename"></stringProp>
+            <stringProp name="script">import bsh.Interpreter;
+import bsh.EvalError;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.util.HashMap;
+import java.util.Map;
+import java.lang.*;
+String n=vars.get(&quot;forEachSum&quot;);
+int n1=Integer.valueOf(n)+1;
+vars.put(&quot;forEachSum&quot;,String.valueOf(n1));
+//System.out.println(vars.get(&quot;forEachSum&quot;));
+
+public static Map genBody(){
+	String objectname=vars.get(&quot;objectname&quot;);
+	SimpleDateFormat formatter = new SimpleDateFormat(&quot;yyyy-MM-dd HH:mm:ss.SSS&quot;);
+	String formatStr =formatter.format(new Date());
+	String time=String.valueOf(System.currentTimeMillis());
+	Map data = new HashMap();
+	   data.put(&quot;name&quot;,objectname+time);
+        data.put(&quot;address&quot;,&quot;address&quot;);
+        data.put(&quot;phone&quot;,&quot;phone&quot;);
+        data.put(&quot;fax&quot;,&quot;fax&quot;);
+//        data.put(&quot;url&quot;,&quot;url&quot;);
+        data.put(&quot;derive&quot;,&quot;activelySeek&quot;);
+        data.put(&quot;type&quot;,&quot;customer&quot;);
+        data.put(&quot;level&quot;,&quot;Normal&quot;);
+        data.put(&quot;area&quot;,&quot;dongbei&quot;);
+        data.put(&quot;industry&quot;,&quot;IT&quot;);
+        data.put(&quot;status&quot;,&quot;visit&quot;);
+        data.put(&quot;modifiedTime&quot;,&quot;thread&quot;+${__threadNum}+&quot;:&quot;+formatStr);
+        data.put(&quot;remark&quot;,vars.get(&quot;user&quot;));
+//        data.put(&quot;coordinate&quot;,&quot;Unsupported&quot;);
+        data.put(&quot;simpleSpell&quot;,&quot;simpleSpell&quot;);
+        data.put(&quot;fullSpell&quot;,&quot;fullSpell&quot;);
+        data.put(&quot;lastRecordTime&quot;,formatStr);
+        data.put(&quot;localId&quot;,&quot;localId&quot;);
+        data.put(&quot;coordinateNote&quot;,&quot;coordinateNote&quot;);
+        data.put(&quot;effectivePhone&quot;,&quot;15911025275&quot;);
+//        System.out.println(&quot;GenDataForCustomerAndCustomerApp:&quot;+data);
+        return data;
+}
+vars.putObject(&quot;data_&quot;+n,genBody());</stringProp>
+          </BeanShellPreProcessor>
+          <hashTree/>
+          <Arguments guiclass="ArgumentsPanel" testclass="Arguments" testname="UserParams" enabled="true">
+            <collectionProp name="Arguments.arguments">
+              <elementProp name="boname" elementType="Argument">
+                <stringProp name="Argument.name">boname</stringProp>
+                <stringProp name="Argument.value">CustomerForCutomerApp</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+              <elementProp name="url" elementType="Argument">
+                <stringProp name="Argument.name">url</stringProp>
+                <stringProp name="Argument.value">/services/1.0/bo/dml/</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+              <elementProp name="objectname" elementType="Argument">
+                <stringProp name="Argument.name">objectname</stringProp>
+                <stringProp name="Argument.value">CustomerEOOperation</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+            </collectionProp>
+          </Arguments>
+          <hashTree/>
+        </hashTree>
+        <BeanShellSampler guiclass="BeanShellSamplerGui" testclass="BeanShellSampler" testname="GenCustomerAndChilds" enabled="true">
+          <stringProp name="BeanShellSampler.query">//System.out.println(&quot;gen dataForCustomer:&quot;+vars.getObject(&quot;data_2&quot;));</stringProp>
+          <stringProp name="BeanShellSampler.filename"></stringProp>
+          <stringProp name="BeanShellSampler.parameters"></stringProp>
+          <boolProp name="BeanShellSampler.resetInterpreter">false</boolProp>
+        </BeanShellSampler>
+        <hashTree>
+          <BeanShellPreProcessor guiclass="TestBeanGUI" testclass="BeanShellPreProcessor" testname="GenDataForCustomer" enabled="true">
+            <boolProp name="resetInterpreter">false</boolProp>
+            <stringProp name="parameters"></stringProp>
+            <stringProp name="filename"></stringProp>
+            <stringProp name="script">import bsh.Interpreter;
+import bsh.EvalError;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.util.HashMap;
+import java.util.Map;
+
+public static Map genBody(){
+	String boname=vars.get(&quot;boname&quot;);
+	SimpleDateFormat formatter = new SimpleDateFormat(&quot;yyyy-MM-dd HH:mm:ss.SSS&quot;);
+	SimpleDateFormat formatter2 = new SimpleDateFormat(&quot;HHmmssSSS&quot;);
+	String formatStr =formatter.format(new Date());
+	String formatStr2 =formatter2.format(new Date());
+	String time=String.valueOf(System.currentTimeMillis());
+	Map data = new HashMap();
+    	data.put(&quot;company&quot;,formatStr2+${group}${__threadNum}${__counter(FALSE)});
+    	data.put(&quot;companyPinyin&quot;,&quot;companyPinyin&quot;);
+    	data.put(&quot;companyShortPinyin&quot;,&quot;companyShortPinyin&quot;);
+    	data.put(&quot;contact&quot;,&quot;contact&quot;);
+    	data.put(&quot;contactPinyin&quot;,&quot;contactPinyin&quot;);
+    	data.put(&quot;contactShortPinyin&quot;,&quot;contactShortPinyin&quot;);
+    	data.put(&quot;phone&quot;,&quot;15911025275&quot;);
+    	data.put(&quot;fax&quot;,&quot;63634624&quot;);
+    	data.put(&quot;qq&quot;,vars.get(&quot;usertag&quot;+${group}));
+    	data.put(&quot;weixin&quot;,&quot;weixin&quot;);
+    	data.put(&quot;mail&quot;,&quot;mail&quot;);
+    	data.put(&quot;comment&quot;,&quot;thread&quot;+${__threadNum}+&quot;:&quot;+formatStr);
+    	data.put(&quot;commentPinyin&quot;,&quot;commentPinyin&quot;);
+    	data.put(&quot;commentShortPinyin&quot;,&quot;commentShortPinyin&quot;);
+    	data.put(&quot;address&quot;,&quot;address&quot;);
+    	data.put(&quot;postcode&quot;,&quot;postcode&quot;);
+    	data.put(&quot;searchKey&quot;,&quot;searchKey&quot;);
+    	data.put(&quot;isSystem&quot;,&quot;false&quot;);
+    	data.put(&quot;openBank&quot;,&quot;openBank&quot;);
+        //System.out.println(&quot;GenDataForCustomer:&quot;+data);
+        return data;
+}
+vars.putObject(&quot;data_2&quot;,genBody());</stringProp>
+          </BeanShellPreProcessor>
+          <hashTree/>
+          <Arguments guiclass="ArgumentsPanel" testclass="Arguments" testname="UserParams" enabled="true">
+            <collectionProp name="Arguments.arguments">
+              <elementProp name="boname" elementType="Argument">
+                <stringProp name="Argument.name">boname</stringProp>
+                <stringProp name="Argument.value">Customer</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+              <elementProp name="url" elementType="Argument">
+                <stringProp name="Argument.name">url</stringProp>
+                <stringProp name="Argument.value">/services/1.0/bo/dml/</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+              <elementProp name="result_code" elementType="Argument">
+                <stringProp name="Argument.name">result_code</stringProp>
+                <stringProp name="Argument.value">200</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+            </collectionProp>
+          </Arguments>
+          <hashTree/>
+        </hashTree>
+      </hashTree>
+      <SetupThreadGroup guiclass="SetupThreadGroupGui" testclass="SetupThreadGroup" testname="setUp Thread Group" enabled="true">
+        <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
+        <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="循环控制器" enabled="true">
+          <boolProp name="LoopController.continue_forever">false</boolProp>
+          <stringProp name="LoopController.loops">1</stringProp>
+        </elementProp>
+        <stringProp name="ThreadGroup.num_threads">1</stringProp>
+        <stringProp name="ThreadGroup.ramp_time">1</stringProp>
+        <longProp name="ThreadGroup.start_time">1468309066000</longProp>
+        <longProp name="ThreadGroup.end_time">1468309066000</longProp>
+        <boolProp name="ThreadGroup.scheduler">false</boolProp>
+        <stringProp name="ThreadGroup.duration"></stringProp>
+        <stringProp name="ThreadGroup.delay"></stringProp>
+      </SetupThreadGroup>
+      <hashTree/>
+      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="user1" enabled="true">
+        <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
+        <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="循环控制器" enabled="true">
+          <boolProp name="LoopController.continue_forever">false</boolProp>
+          <stringProp name="LoopController.loops">${loopnum}</stringProp>
+        </elementProp>
+        <stringProp name="ThreadGroup.num_threads">${threadnum}</stringProp>
+        <stringProp name="ThreadGroup.ramp_time">1</stringProp>
+        <longProp name="ThreadGroup.start_time">1467601259000</longProp>
+        <longProp name="ThreadGroup.end_time">1467601259000</longProp>
+        <boolProp name="ThreadGroup.scheduler">false</boolProp>
+        <stringProp name="ThreadGroup.duration"></stringProp>
+        <stringProp name="ThreadGroup.delay"></stringProp>
+      </ThreadGroup>
+      <hashTree>
+        <OnceOnlyController guiclass="OnceOnlyControllerGui" testclass="OnceOnlyController" testname="init control" enabled="true"/>
+        <hashTree>
+          <BeanShellSampler guiclass="BeanShellSamplerGui" testclass="BeanShellSampler" testname="BeanShell Sampler" enabled="true">
+            <stringProp name="BeanShellSampler.query">vars.put(&quot;group&quot;,((ctx.getThread().getThreadName().toString()).split(&quot; &quot;)[1]).split(&quot;-&quot;)[0]);</stringProp>
+            <stringProp name="BeanShellSampler.filename"></stringProp>
+            <stringProp name="BeanShellSampler.parameters"></stringProp>
+            <boolProp name="BeanShellSampler.resetInterpreter">false</boolProp>
+          </BeanShellSampler>
+          <hashTree/>
+          <BeanShellSampler guiclass="BeanShellSamplerGui" testclass="BeanShellSampler" testname="login and header" enabled="true">
+            <stringProp name="BeanShellSampler.query">//System.out.println(vars.get(&quot;accessToken_1&quot;));
+//System.out.println(vars.get(&quot;accessToken_2&quot;));
+//System.out.println(vars.get(&quot;accessToken_3&quot;));
+//System.out.println(vars.getObject(&quot;header_1&quot;));
+//System.out.println(vars.getObject(&quot;header_2&quot;));
+//System.out.println(vars.getObject(&quot;header_3&quot;));
+</stringProp>
+            <stringProp name="BeanShellSampler.filename"></stringProp>
+            <stringProp name="BeanShellSampler.parameters"></stringProp>
+            <boolProp name="BeanShellSampler.resetInterpreter">false</boolProp>
+          </BeanShellSampler>
+          <hashTree>
+            <BeanShellPreProcessor guiclass="TestBeanGUI" testclass="BeanShellPreProcessor" testname="login PreProcessor" enabled="true">
+              <stringProp name="filename"></stringProp>
+              <stringProp name="parameters"></stringProp>
+              <boolProp name="resetInterpreter">false</boolProp>
+              <stringProp name="script">import com.chanjet.pub.*;
+import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson.JSONArray;
+String configPath= System.getProperty(&quot;user.dir&quot;)+&quot;/scripts/testapp3.config.json&quot;;
+//String ccsPath=System.getProperty(&quot;user.dir&quot;)+&quot;/scripts/ccs.properties&quot;;
+//System.out.println(configPath);
+//System.out.println(ccsPath);
+
+String configString=CiaUtils.readConfigJson(configPath);
+String ip=JSONObject.parseObject(configString).get(&quot;host&quot;).toString();
+String port=JSONObject.parseObject(configString).get(&quot;port&quot;).toString();
+String isvcode=JSONObject.parseObject(configString).get(&quot;isvcode&quot;).toString();
+String appname=JSONObject.parseObject(configString).get(&quot;appname&quot;).toString();
+String enterpriseId=JSONObject.parseObject(configString).get(&quot;enterpriseId&quot;).toString();
+vars.put(&quot;ip&quot;,ip);
+vars.put(&quot;port&quot;,port);
+vars.put(&quot;isvcode&quot;,isvcode);
+vars.put(&quot;appname&quot;,appname);
+vars.put(&quot;enterpriseId&quot;,enterpriseId);
+//System.out.println(&quot;enterpriseId:&quot;+vars.get(&quot;enterpriseId&quot;));
+String array=JSONObject.parseObject(configString).get(&quot;users&quot;).toString();
+
+public static String getUser(String array,String tag)
+{
+	StringBuffer buffer=new StringBuffer();
+	JSONArray responseJsonArray = JSONArray.parseArray(array);
+	for(int i=0;i&lt;responseJsonArray.size();i++)
+	{
+	    JSONObject responseJson = JSONObject.parseObject(responseJsonArray.get(i).toString());
+         if(responseJson.getString(&quot;tag&quot;).equals(tag)){
+         	     //System.out.println(responseJson.getString(&quot;username&quot;));
+               //System.out.println(responseJson.getString(&quot;password&quot;));
+               buffer.append(responseJson.getString(&quot;username&quot;)+&quot;:&quot;);
+               buffer.append(responseJson.getString(&quot;password&quot;));
+         }
+     }
+     return buffer.toString();
+}
+
+public static String genToken(String user,String pass,String orgId)
+{
+	String result=CiaUtils.getToken(user,pass);
+	String token=JSONObject.parseObject(result).get(&quot;access_token&quot;).toString();
+	CiaUtils.testSaveOrUpdateTokenOrgRel(token,orgId);
+	return token;
+}
+
+String up1=getUser(array,vars.get(&quot;usertag1&quot;));
+vars.put(&quot;usertag1&quot;,up1.split(&quot;:&quot;)[0]);
+vars.put(&quot;accessToken_1&quot;,genToken(up1.split(&quot;:&quot;)[0],up1.split(&quot;:&quot;)[1],vars.get(&quot;enterpriseId&quot;)));
+String up2=getUser(array,vars.get(&quot;usertag2&quot;));
+vars.put(&quot;usertag2&quot;,up2.split(&quot;:&quot;)[0]);
+vars.put(&quot;accessToken_2&quot;,genToken(up2.split(&quot;:&quot;)[0],up2.split(&quot;:&quot;)[1],vars.get(&quot;enterpriseId&quot;)));
+String up3=getUser(array,vars.get(&quot;usertag3&quot;));
+vars.put(&quot;usertag3&quot;,up3.split(&quot;:&quot;)[0]);
+vars.put(&quot;accessToken_3&quot;,genToken(up3.split(&quot;:&quot;)[0],up3.split(&quot;:&quot;)[1],vars.get(&quot;enterpriseId&quot;)));
+
+
+ 
+
+
+
+</stringProp>
+            </BeanShellPreProcessor>
+            <hashTree/>
+            <BeanShellPreProcessor guiclass="TestBeanGUI" testclass="BeanShellPreProcessor" testname="header PreProcessor" enabled="true">
+              <stringProp name="filename"></stringProp>
+              <stringProp name="parameters">{header_1}</stringProp>
+              <boolProp name="resetInterpreter">false</boolProp>
+              <stringProp name="script">import com.chanjet.pub.*;
+import java.util.HashMap;
+import java.util.Map;
+
+public static Map genHeader(String token){
+	Map header = new HashMap();
+     header.put(&quot;Token&quot;, token);
+	header.put(&quot;Device-Serial&quot;, &quot;123456&quot;);
+	header.put(&quot;Device-Name&quot;, &quot;chanjet&quot;);
+	header.put(&quot;Device-Type&quot;, &quot;Android&quot;);
+	header.put(&quot;Accept&quot;, &quot;*/*&quot;);
+	header.put(&quot;Content-Type&quot;, &quot;application/json&quot;);
+//	System.out.println(&quot;genHeader:&quot;+header);
+	return header;
+}
+
+String token_1=vars.get(&quot;accessToken_1&quot;);
+String token_2=vars.get(&quot;accessToken_2&quot;);
+String token_3=vars.get(&quot;accessToken_3&quot;);
+vars.putObject(&quot;header_1&quot;,genHeader(token_1));
+vars.putObject(&quot;header_2&quot;,genHeader(token_2));
+vars.putObject(&quot;header_3&quot;,genHeader(token_3));</stringProp>
+            </BeanShellPreProcessor>
+            <hashTree/>
+          </hashTree>
+        </hashTree>
+        <ModuleController guiclass="ModuleControllerGui" testclass="ModuleController" testname="body" enabled="true">
+          <collectionProp name="ModuleController.node_path">
+            <stringProp name="23750841">工作台</stringProp>
+            <stringProp name="869052411">测试计划</stringProp>
+            <stringProp name="3029410">body</stringProp>
+          </collectionProp>
+        </ModuleController>
+        <hashTree/>
+        <BeanShellSampler guiclass="BeanShellSamplerGui" testclass="BeanShellSampler" testname="AddCustomerAndChilds${group}" enabled="true">
+          <stringProp name="BeanShellSampler.query">//System.out.println(vars.getObject(&quot;response&quot;).getStatusCode()+&quot;:&quot;+vars.getObject(&quot;response&quot;).getString());
+import com.chanjet.pub.HttpCommon;
+import com.chanjet.struct.HttpMethodEnum;
+import com.chanjet.struct.HttpResponse;
+import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson.JSON;
+
+String testData=vars.get(&quot;testData&quot;);
+HttpResponse response=HttpCommon.doHttp(vars.get(&quot;urlString&quot;), 
+HttpMethodEnum.POST,vars.getObject(&quot;header_&quot;+${group}), null, testData.getBytes(), false);
+vars.putObject(&quot;response&quot;,response); 
+if (response.getStatusCode()!=Integer.valueOf(vars.get(&quot;result_code&quot;))) {
+	System.out.println(response.getStatusCode());
+	System.err.println(&quot;error testData:&quot;+vars.get(&quot;testData&quot;));
+}
+//System.out.println(&quot;**********thread group:&quot;+${group}+&quot; send request finish!!!************&quot;);</stringProp>
+          <stringProp name="BeanShellSampler.filename"></stringProp>
+          <stringProp name="BeanShellSampler.parameters"></stringProp>
+          <boolProp name="BeanShellSampler.resetInterpreter">false</boolProp>
+        </BeanShellSampler>
+        <hashTree>
+          <BeanShellPreProcessor guiclass="TestBeanGUI" testclass="BeanShellPreProcessor" testname="BeanShell PreProcessor" enabled="true">
+            <boolProp name="resetInterpreter">false</boolProp>
+            <stringProp name="parameters"></stringProp>
+            <stringProp name="filename"></stringProp>
+            <stringProp name="script">import com.chanjet.pub.HttpCommon;
+import com.chanjet.struct.HttpMethodEnum;
+import com.chanjet.struct.HttpResponse;
+import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson.JSON;
+
+System.out.println(&quot;**********thg:&quot;+${group}+&quot;,thr:&quot;+${__threadNum}+&quot;,count:&quot;+${__counter(,)}+&quot;,header:&quot;+vars.getObject(&quot;header_&quot;+${group})+&quot; prepare to send request************&quot;);
+//System.out.println(&quot;get dataForCustomer:&quot;+vars.getObject(&quot;data&quot;));
+//System.out.println(&quot;get boname:&quot;+vars.get(&quot;boname&quot;));
+//System.out.println(&quot;get boname:&quot;+vars.get(&quot;url&quot;));
+String urlString=&quot;http://&quot;+ vars.get(&quot;ip&quot;)+ &quot;:&quot;+ vars.get(&quot;port&quot;)+&quot;/&quot;
+				+ vars.get(&quot;isvcode&quot;)+&quot;/&quot;
+				+ vars.get(&quot;appname&quot;)
+				+ vars.get(&quot;url&quot;)
+				+ vars.get(&quot;boname&quot;); 
+System.out.println(urlString);
+String testData=JSON.toJSONString(vars.getObject(&quot;data_2&quot;));
+//System.out.println(testData);
+vars.put(&quot;urlString&quot;,urlString); 
+vars.put(&quot;testData&quot;,testData); 
+
+
+</stringProp>
+          </BeanShellPreProcessor>
+          <hashTree/>
+          <BeanShellAssertion guiclass="BeanShellAssertionGui" testclass="BeanShellAssertion" testname="assert" enabled="true">
+            <stringProp name="BeanShellAssertion.query">import com.chanjet.pub.HttpCommon;
+import com.chanjet.struct.HttpMethodEnum;
+import com.chanjet.struct.HttpResponse;
+import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson.JSON;
+
+String result = vars.get(&quot;result_code&quot;);
+HttpResponse response=vars.getObject(&quot;response&quot;);
+//System.out.println(&quot;result:&quot;+result+&quot;,actually:&quot;+response.getStatusCode());
+//System.out.println(response.getStatusCode()+&quot;:&quot;+response.getString());
+if (response.getStatusCode()!=Integer.valueOf(result)) {
+    Failure = true;
+    FailureMessage =&quot;expected:&quot;+result+&quot;,actually:&quot;+response.getStatusCode()+&quot;,response:&quot;+response.getString();
+}
+System.out.println(&quot;Failure:&quot;+Failure);
+//log.info(response.getString());
+</stringProp>
+            <stringProp name="BeanShellAssertion.filename"></stringProp>
+            <stringProp name="BeanShellAssertion.parameters"></stringProp>
+            <boolProp name="BeanShellAssertion.resetInterpreter">false</boolProp>
+          </BeanShellAssertion>
+          <hashTree/>
+          <kg.apc.jmeter.vizualizers.CorrectedResultCollector guiclass="kg.apc.jmeter.vizualizers.TransactionsPerSecondGui" testclass="kg.apc.jmeter.vizualizers.CorrectedResultCollector" testname="jp@gc - Transactions per Second" enabled="false">
+            <boolProp name="ResultCollector.error_logging">false</boolProp>
+            <objProp>
+              <name>saveConfig</name>
+              <value class="SampleSaveConfiguration">
+                <time>true</time>
+                <latency>true</latency>
+                <timestamp>true</timestamp>
+                <success>true</success>
+                <label>true</label>
+                <code>true</code>
+                <message>true</message>
+                <threadName>true</threadName>
+                <dataType>true</dataType>
+                <encoding>false</encoding>
+                <assertions>true</assertions>
+                <subresults>true</subresults>
+                <responseData>false</responseData>
+                <samplerData>false</samplerData>
+                <xml>false</xml>
+                <fieldNames>true</fieldNames>
+                <responseHeaders>false</responseHeaders>
+                <requestHeaders>false</requestHeaders>
+                <responseDataOnError>false</responseDataOnError>
+                <saveAssertionResultsFailureMessage>true</saveAssertionResultsFailureMessage>
+                <assertionsResultsToSave>0</assertionsResultsToSave>
+                <bytes>true</bytes>
+                <threadCounts>true</threadCounts>
+                <idleTime>true</idleTime>
+              </value>
+            </objProp>
+            <stringProp name="filename"></stringProp>
+            <longProp name="interval_grouping">1000</longProp>
+            <boolProp name="graph_aggregated">false</boolProp>
+            <stringProp name="include_sample_labels"></stringProp>
+            <stringProp name="exclude_sample_labels"></stringProp>
+            <stringProp name="start_offset"></stringProp>
+            <stringProp name="end_offset"></stringProp>
+            <boolProp name="include_checkbox_state">false</boolProp>
+            <boolProp name="exclude_checkbox_state">false</boolProp>
+          </kg.apc.jmeter.vizualizers.CorrectedResultCollector>
+          <hashTree/>
+        </hashTree>
+      </hashTree>
+      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="user1" enabled="true">
+        <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
+        <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="循环控制器" enabled="true">
+          <boolProp name="LoopController.continue_forever">false</boolProp>
+          <stringProp name="LoopController.loops">${loopnum}</stringProp>
+        </elementProp>
+        <stringProp name="ThreadGroup.num_threads">${threadnum}</stringProp>
+        <stringProp name="ThreadGroup.ramp_time">1</stringProp>
+        <longProp name="ThreadGroup.start_time">1467601259000</longProp>
+        <longProp name="ThreadGroup.end_time">1467601259000</longProp>
+        <boolProp name="ThreadGroup.scheduler">false</boolProp>
+        <stringProp name="ThreadGroup.duration"></stringProp>
+        <stringProp name="ThreadGroup.delay"></stringProp>
+      </ThreadGroup>
+      <hashTree>
+        <OnceOnlyController guiclass="OnceOnlyControllerGui" testclass="OnceOnlyController" testname="init control" enabled="true"/>
+        <hashTree>
+          <BeanShellSampler guiclass="BeanShellSamplerGui" testclass="BeanShellSampler" testname="BeanShell Sampler" enabled="true">
+            <stringProp name="BeanShellSampler.query">vars.put(&quot;group&quot;,((ctx.getThread().getThreadName().toString()).split(&quot; &quot;)[1]).split(&quot;-&quot;)[0]);</stringProp>
+            <stringProp name="BeanShellSampler.filename"></stringProp>
+            <stringProp name="BeanShellSampler.parameters"></stringProp>
+            <boolProp name="BeanShellSampler.resetInterpreter">false</boolProp>
+          </BeanShellSampler>
+          <hashTree/>
+          <BeanShellSampler guiclass="BeanShellSamplerGui" testclass="BeanShellSampler" testname="login and header" enabled="true">
+            <stringProp name="BeanShellSampler.query">//System.out.println(vars.get(&quot;accessToken_1&quot;));
+//System.out.println(vars.get(&quot;accessToken_2&quot;));
+//System.out.println(vars.get(&quot;accessToken_3&quot;));
+//System.out.println(vars.getObject(&quot;header_1&quot;));
+//System.out.println(vars.getObject(&quot;header_2&quot;));
+//System.out.println(vars.getObject(&quot;header_3&quot;));
+</stringProp>
+            <stringProp name="BeanShellSampler.filename"></stringProp>
+            <stringProp name="BeanShellSampler.parameters"></stringProp>
+            <boolProp name="BeanShellSampler.resetInterpreter">false</boolProp>
+          </BeanShellSampler>
+          <hashTree>
+            <BeanShellPreProcessor guiclass="TestBeanGUI" testclass="BeanShellPreProcessor" testname="login PreProcessor" enabled="true">
+              <stringProp name="filename"></stringProp>
+              <stringProp name="parameters"></stringProp>
+              <boolProp name="resetInterpreter">false</boolProp>
+              <stringProp name="script">import com.chanjet.pub.*;
+import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson.JSONArray;
+String configPath= System.getProperty(&quot;user.dir&quot;)+&quot;/scripts/testapp3.config.json&quot;;
+//String ccsPath=System.getProperty(&quot;user.dir&quot;)+&quot;/scripts/ccs.properties&quot;;
+//System.out.println(configPath);
+//System.out.println(ccsPath);
+
+String configString=CiaUtils.readConfigJson(configPath);
+String ip=JSONObject.parseObject(configString).get(&quot;host&quot;).toString();
+String port=JSONObject.parseObject(configString).get(&quot;port&quot;).toString();
+String isvcode=JSONObject.parseObject(configString).get(&quot;isvcode&quot;).toString();
+String appname=JSONObject.parseObject(configString).get(&quot;appname&quot;).toString();
+String enterpriseId=JSONObject.parseObject(configString).get(&quot;enterpriseId&quot;).toString();
+vars.put(&quot;ip&quot;,ip);
+vars.put(&quot;port&quot;,port);
+vars.put(&quot;isvcode&quot;,isvcode);
+vars.put(&quot;appname&quot;,appname);
+vars.put(&quot;enterpriseId&quot;,enterpriseId);
+//System.out.println(&quot;enterpriseId:&quot;+vars.get(&quot;enterpriseId&quot;));
+String array=JSONObject.parseObject(configString).get(&quot;users&quot;).toString();
+
+public static String getUser(String array,String tag)
+{
+	StringBuffer buffer=new StringBuffer();
+	JSONArray responseJsonArray = JSONArray.parseArray(array);
+	for(int i=0;i&lt;responseJsonArray.size();i++)
+	{
+	    JSONObject responseJson = JSONObject.parseObject(responseJsonArray.get(i).toString());
+         if(responseJson.getString(&quot;tag&quot;).equals(tag)){
+         	     //System.out.println(responseJson.getString(&quot;username&quot;));
+               //System.out.println(responseJson.getString(&quot;password&quot;));
+               buffer.append(responseJson.getString(&quot;username&quot;)+&quot;:&quot;);
+               buffer.append(responseJson.getString(&quot;password&quot;));
+         }
+     }
+     return buffer.toString();
+}
+
+public static String genToken(String user,String pass,String orgId)
+{
+	String result=CiaUtils.getToken(user,pass);
+	String token=JSONObject.parseObject(result).get(&quot;access_token&quot;).toString();
+	CiaUtils.testSaveOrUpdateTokenOrgRel(token,orgId);
+	return token;
+}
+
+String up1=getUser(array,vars.get(&quot;usertag1&quot;));
+vars.put(&quot;usertag1&quot;,up1.split(&quot;:&quot;)[0]);
+vars.put(&quot;accessToken_1&quot;,genToken(up1.split(&quot;:&quot;)[0],up1.split(&quot;:&quot;)[1],vars.get(&quot;enterpriseId&quot;)));
+String up2=getUser(array,vars.get(&quot;usertag2&quot;));
+vars.put(&quot;usertag2&quot;,up2.split(&quot;:&quot;)[0]);
+vars.put(&quot;accessToken_2&quot;,genToken(up2.split(&quot;:&quot;)[0],up2.split(&quot;:&quot;)[1],vars.get(&quot;enterpriseId&quot;)));
+String up3=getUser(array,vars.get(&quot;usertag3&quot;));
+vars.put(&quot;usertag3&quot;,up3.split(&quot;:&quot;)[0]);
+vars.put(&quot;accessToken_3&quot;,genToken(up3.split(&quot;:&quot;)[0],up3.split(&quot;:&quot;)[1],vars.get(&quot;enterpriseId&quot;)));
+
+
+ 
+
+
+
+</stringProp>
+            </BeanShellPreProcessor>
+            <hashTree/>
+            <BeanShellPreProcessor guiclass="TestBeanGUI" testclass="BeanShellPreProcessor" testname="header PreProcessor" enabled="true">
+              <stringProp name="filename"></stringProp>
+              <stringProp name="parameters">{header_1}</stringProp>
+              <boolProp name="resetInterpreter">false</boolProp>
+              <stringProp name="script">import com.chanjet.pub.*;
+import java.util.HashMap;
+import java.util.Map;
+
+public static Map genHeader(String token){
+	Map header = new HashMap();
+     header.put(&quot;Token&quot;, token);
+	header.put(&quot;Device-Serial&quot;, &quot;123456&quot;);
+	header.put(&quot;Device-Name&quot;, &quot;chanjet&quot;);
+	header.put(&quot;Device-Type&quot;, &quot;Android&quot;);
+	header.put(&quot;Accept&quot;, &quot;*/*&quot;);
+	header.put(&quot;Content-Type&quot;, &quot;application/json&quot;);
+//	System.out.println(&quot;genHeader:&quot;+header);
+	return header;
+}
+
+String token_1=vars.get(&quot;accessToken_1&quot;);
+String token_2=vars.get(&quot;accessToken_2&quot;);
+String token_3=vars.get(&quot;accessToken_3&quot;);
+vars.putObject(&quot;header_1&quot;,genHeader(token_1));
+vars.putObject(&quot;header_2&quot;,genHeader(token_2));
+vars.putObject(&quot;header_3&quot;,genHeader(token_3));</stringProp>
+            </BeanShellPreProcessor>
+            <hashTree/>
+          </hashTree>
+        </hashTree>
+        <ModuleController guiclass="ModuleControllerGui" testclass="ModuleController" testname="body" enabled="true">
+          <collectionProp name="ModuleController.node_path">
+            <stringProp name="23750841">工作台</stringProp>
+            <stringProp name="869052411">测试计划</stringProp>
+            <stringProp name="3029410">body</stringProp>
+          </collectionProp>
+        </ModuleController>
+        <hashTree/>
+        <BeanShellSampler guiclass="BeanShellSamplerGui" testclass="BeanShellSampler" testname="AddCustomerAndChilds${group}" enabled="true">
+          <stringProp name="BeanShellSampler.query">//System.out.println(vars.getObject(&quot;response&quot;).getStatusCode()+&quot;:&quot;+vars.getObject(&quot;response&quot;).getString());
+import com.chanjet.pub.HttpCommon;
+import com.chanjet.struct.HttpMethodEnum;
+import com.chanjet.struct.HttpResponse;
+import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson.JSON;
+
+String testData=vars.get(&quot;testData&quot;);
+HttpResponse response=HttpCommon.doHttp(vars.get(&quot;urlString&quot;), 
+HttpMethodEnum.POST,vars.getObject(&quot;header_&quot;+${group}), null, testData.getBytes(), false);
+vars.putObject(&quot;response&quot;,response); 
+if (response.getStatusCode()!=Integer.valueOf(vars.get(&quot;result_code&quot;))) {
+	System.out.println(response.getStatusCode());
+	System.err.println(&quot;error testData:&quot;+vars.get(&quot;testData&quot;));
+}
+//System.out.println(&quot;**********thread group:&quot;+${group}+&quot; send request finish!!!************&quot;);</stringProp>
+          <stringProp name="BeanShellSampler.filename"></stringProp>
+          <stringProp name="BeanShellSampler.parameters"></stringProp>
+          <boolProp name="BeanShellSampler.resetInterpreter">false</boolProp>
+        </BeanShellSampler>
+        <hashTree>
+          <BeanShellPreProcessor guiclass="TestBeanGUI" testclass="BeanShellPreProcessor" testname="BeanShell PreProcessor" enabled="true">
+            <boolProp name="resetInterpreter">false</boolProp>
+            <stringProp name="parameters"></stringProp>
+            <stringProp name="filename"></stringProp>
+            <stringProp name="script">import com.chanjet.pub.HttpCommon;
+import com.chanjet.struct.HttpMethodEnum;
+import com.chanjet.struct.HttpResponse;
+import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson.JSON;
+
+System.out.println(&quot;**********thg:&quot;+${group}+&quot;,thr:&quot;+${__threadNum}+&quot;,count:&quot;+${__counter(,)}+&quot;,header:&quot;+vars.getObject(&quot;header_&quot;+${group})+&quot; prepare to send request************&quot;);
+//System.out.println(&quot;get dataForCustomer:&quot;+vars.getObject(&quot;data&quot;));
+//System.out.println(&quot;get boname:&quot;+vars.get(&quot;boname&quot;));
+//System.out.println(&quot;get boname:&quot;+vars.get(&quot;url&quot;));
+String urlString=&quot;http://&quot;+ vars.get(&quot;ip&quot;)+ &quot;:&quot;+ vars.get(&quot;port&quot;)+&quot;/&quot;
+				+ vars.get(&quot;isvcode&quot;)+&quot;/&quot;
+				+ vars.get(&quot;appname&quot;)
+				+ vars.get(&quot;url&quot;)
+				+ vars.get(&quot;boname&quot;); 
+System.out.println(urlString);
+String testData=JSON.toJSONString(vars.getObject(&quot;data_2&quot;));
+//System.out.println(testData);
+vars.put(&quot;urlString&quot;,urlString); 
+vars.put(&quot;testData&quot;,testData); 
+
+
+</stringProp>
+          </BeanShellPreProcessor>
+          <hashTree/>
+          <BeanShellAssertion guiclass="BeanShellAssertionGui" testclass="BeanShellAssertion" testname="assert" enabled="true">
+            <stringProp name="BeanShellAssertion.query">import com.chanjet.pub.HttpCommon;
+import com.chanjet.struct.HttpMethodEnum;
+import com.chanjet.struct.HttpResponse;
+import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson.JSON;
+
+String result = vars.get(&quot;result_code&quot;);
+HttpResponse response=vars.getObject(&quot;response&quot;);
+//System.out.println(&quot;result:&quot;+result+&quot;,actually:&quot;+response.getStatusCode());
+//System.out.println(response.getStatusCode()+&quot;:&quot;+response.getString());
+if (response.getStatusCode()!=Integer.valueOf(result)) {
+    Failure = true;
+    FailureMessage =&quot;expected:&quot;+result+&quot;,actually:&quot;+response.getStatusCode()+&quot;,response:&quot;+response.getString();
+}
+System.out.println(&quot;Failure:&quot;+Failure);
+//log.info(response.getString());
+</stringProp>
+            <stringProp name="BeanShellAssertion.filename"></stringProp>
+            <stringProp name="BeanShellAssertion.parameters"></stringProp>
+            <boolProp name="BeanShellAssertion.resetInterpreter">false</boolProp>
+          </BeanShellAssertion>
+          <hashTree/>
+          <kg.apc.jmeter.vizualizers.CorrectedResultCollector guiclass="kg.apc.jmeter.vizualizers.TransactionsPerSecondGui" testclass="kg.apc.jmeter.vizualizers.CorrectedResultCollector" testname="jp@gc - Transactions per Second" enabled="true">
+            <boolProp name="ResultCollector.error_logging">false</boolProp>
+            <objProp>
+              <name>saveConfig</name>
+              <value class="SampleSaveConfiguration">
+                <time>true</time>
+                <latency>true</latency>
+                <timestamp>true</timestamp>
+                <success>true</success>
+                <label>true</label>
+                <code>true</code>
+                <message>true</message>
+                <threadName>true</threadName>
+                <dataType>true</dataType>
+                <encoding>false</encoding>
+                <assertions>true</assertions>
+                <subresults>true</subresults>
+                <responseData>false</responseData>
+                <samplerData>false</samplerData>
+                <xml>false</xml>
+                <fieldNames>true</fieldNames>
+                <responseHeaders>false</responseHeaders>
+                <requestHeaders>false</requestHeaders>
+                <responseDataOnError>false</responseDataOnError>
+                <saveAssertionResultsFailureMessage>true</saveAssertionResultsFailureMessage>
+                <assertionsResultsToSave>0</assertionsResultsToSave>
+                <bytes>true</bytes>
+                <threadCounts>true</threadCounts>
+                <idleTime>true</idleTime>
+              </value>
+            </objProp>
+            <stringProp name="filename"></stringProp>
+            <longProp name="interval_grouping">1000</longProp>
+            <boolProp name="graph_aggregated">false</boolProp>
+            <stringProp name="include_sample_labels"></stringProp>
+            <stringProp name="exclude_sample_labels"></stringProp>
+            <stringProp name="start_offset"></stringProp>
+            <stringProp name="end_offset"></stringProp>
+            <boolProp name="include_checkbox_state">false</boolProp>
+            <boolProp name="exclude_checkbox_state">false</boolProp>
+          </kg.apc.jmeter.vizualizers.CorrectedResultCollector>
+          <hashTree/>
+        </hashTree>
+      </hashTree>
+      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="user1" enabled="true">
+        <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
+        <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="循环控制器" enabled="true">
+          <boolProp name="LoopController.continue_forever">false</boolProp>
+          <stringProp name="LoopController.loops">${loopnum}</stringProp>
+        </elementProp>
+        <stringProp name="ThreadGroup.num_threads">${threadnum}</stringProp>
+        <stringProp name="ThreadGroup.ramp_time">1</stringProp>
+        <longProp name="ThreadGroup.start_time">1467601259000</longProp>
+        <longProp name="ThreadGroup.end_time">1467601259000</longProp>
+        <boolProp name="ThreadGroup.scheduler">false</boolProp>
+        <stringProp name="ThreadGroup.duration"></stringProp>
+        <stringProp name="ThreadGroup.delay"></stringProp>
+      </ThreadGroup>
+      <hashTree>
+        <OnceOnlyController guiclass="OnceOnlyControllerGui" testclass="OnceOnlyController" testname="init control" enabled="true"/>
+        <hashTree>
+          <BeanShellSampler guiclass="BeanShellSamplerGui" testclass="BeanShellSampler" testname="BeanShell Sampler" enabled="true">
+            <stringProp name="BeanShellSampler.query">vars.put(&quot;group&quot;,((ctx.getThread().getThreadName().toString()).split(&quot; &quot;)[1]).split(&quot;-&quot;)[0]);</stringProp>
+            <stringProp name="BeanShellSampler.filename"></stringProp>
+            <stringProp name="BeanShellSampler.parameters"></stringProp>
+            <boolProp name="BeanShellSampler.resetInterpreter">false</boolProp>
+          </BeanShellSampler>
+          <hashTree/>
+          <BeanShellSampler guiclass="BeanShellSamplerGui" testclass="BeanShellSampler" testname="login and header" enabled="true">
+            <stringProp name="BeanShellSampler.query">//System.out.println(vars.get(&quot;accessToken_1&quot;));
+//System.out.println(vars.get(&quot;accessToken_2&quot;));
+//System.out.println(vars.get(&quot;accessToken_3&quot;));
+//System.out.println(vars.getObject(&quot;header_1&quot;));
+//System.out.println(vars.getObject(&quot;header_2&quot;));
+//System.out.println(vars.getObject(&quot;header_3&quot;));
+</stringProp>
+            <stringProp name="BeanShellSampler.filename"></stringProp>
+            <stringProp name="BeanShellSampler.parameters"></stringProp>
+            <boolProp name="BeanShellSampler.resetInterpreter">false</boolProp>
+          </BeanShellSampler>
+          <hashTree>
+            <BeanShellPreProcessor guiclass="TestBeanGUI" testclass="BeanShellPreProcessor" testname="login PreProcessor" enabled="true">
+              <stringProp name="filename"></stringProp>
+              <stringProp name="parameters"></stringProp>
+              <boolProp name="resetInterpreter">false</boolProp>
+              <stringProp name="script">import com.chanjet.pub.*;
+import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson.JSONArray;
+String configPath= System.getProperty(&quot;user.dir&quot;)+&quot;/scripts/testapp3.config.json&quot;;
+//String ccsPath=System.getProperty(&quot;user.dir&quot;)+&quot;/scripts/ccs.properties&quot;;
+//System.out.println(configPath);
+//System.out.println(ccsPath);
+
+String configString=CiaUtils.readConfigJson(configPath);
+String ip=JSONObject.parseObject(configString).get(&quot;host&quot;).toString();
+String port=JSONObject.parseObject(configString).get(&quot;port&quot;).toString();
+String isvcode=JSONObject.parseObject(configString).get(&quot;isvcode&quot;).toString();
+String appname=JSONObject.parseObject(configString).get(&quot;appname&quot;).toString();
+String enterpriseId=JSONObject.parseObject(configString).get(&quot;enterpriseId&quot;).toString();
+vars.put(&quot;ip&quot;,ip);
+vars.put(&quot;port&quot;,port);
+vars.put(&quot;isvcode&quot;,isvcode);
+vars.put(&quot;appname&quot;,appname);
+vars.put(&quot;enterpriseId&quot;,enterpriseId);
+//System.out.println(&quot;enterpriseId:&quot;+vars.get(&quot;enterpriseId&quot;));
+String array=JSONObject.parseObject(configString).get(&quot;users&quot;).toString();
+
+public static String getUser(String array,String tag)
+{
+	StringBuffer buffer=new StringBuffer();
+	JSONArray responseJsonArray = JSONArray.parseArray(array);
+	for(int i=0;i&lt;responseJsonArray.size();i++)
+	{
+	    JSONObject responseJson = JSONObject.parseObject(responseJsonArray.get(i).toString());
+         if(responseJson.getString(&quot;tag&quot;).equals(tag)){
+         	     //System.out.println(responseJson.getString(&quot;username&quot;));
+               //System.out.println(responseJson.getString(&quot;password&quot;));
+               buffer.append(responseJson.getString(&quot;username&quot;)+&quot;:&quot;);
+               buffer.append(responseJson.getString(&quot;password&quot;));
+         }
+     }
+     return buffer.toString();
+}
+
+public static String genToken(String user,String pass,String orgId)
+{
+	String result=CiaUtils.getToken(user,pass);
+	String token=JSONObject.parseObject(result).get(&quot;access_token&quot;).toString();
+	CiaUtils.testSaveOrUpdateTokenOrgRel(token,orgId);
+	return token;
+}
+
+String up1=getUser(array,vars.get(&quot;usertag1&quot;));
+vars.put(&quot;usertag1&quot;,up1.split(&quot;:&quot;)[0]);
+vars.put(&quot;accessToken_1&quot;,genToken(up1.split(&quot;:&quot;)[0],up1.split(&quot;:&quot;)[1],vars.get(&quot;enterpriseId&quot;)));
+String up2=getUser(array,vars.get(&quot;usertag2&quot;));
+vars.put(&quot;usertag2&quot;,up2.split(&quot;:&quot;)[0]);
+vars.put(&quot;accessToken_2&quot;,genToken(up2.split(&quot;:&quot;)[0],up2.split(&quot;:&quot;)[1],vars.get(&quot;enterpriseId&quot;)));
+String up3=getUser(array,vars.get(&quot;usertag3&quot;));
+vars.put(&quot;usertag3&quot;,up3.split(&quot;:&quot;)[0]);
+vars.put(&quot;accessToken_3&quot;,genToken(up3.split(&quot;:&quot;)[0],up3.split(&quot;:&quot;)[1],vars.get(&quot;enterpriseId&quot;)));
+
+
+ 
+
+
+
+</stringProp>
+            </BeanShellPreProcessor>
+            <hashTree/>
+            <BeanShellPreProcessor guiclass="TestBeanGUI" testclass="BeanShellPreProcessor" testname="header PreProcessor" enabled="true">
+              <stringProp name="filename"></stringProp>
+              <stringProp name="parameters">{header_1}</stringProp>
+              <boolProp name="resetInterpreter">false</boolProp>
+              <stringProp name="script">import com.chanjet.pub.*;
+import java.util.HashMap;
+import java.util.Map;
+
+public static Map genHeader(String token){
+	Map header = new HashMap();
+     header.put(&quot;Token&quot;, token);
+	header.put(&quot;Device-Serial&quot;, &quot;123456&quot;);
+	header.put(&quot;Device-Name&quot;, &quot;chanjet&quot;);
+	header.put(&quot;Device-Type&quot;, &quot;Android&quot;);
+	header.put(&quot;Accept&quot;, &quot;*/*&quot;);
+	header.put(&quot;Content-Type&quot;, &quot;application/json&quot;);
+//	System.out.println(&quot;genHeader:&quot;+header);
+	return header;
+}
+
+String token_1=vars.get(&quot;accessToken_1&quot;);
+String token_2=vars.get(&quot;accessToken_2&quot;);
+String token_3=vars.get(&quot;accessToken_3&quot;);
+vars.putObject(&quot;header_1&quot;,genHeader(token_1));
+vars.putObject(&quot;header_2&quot;,genHeader(token_2));
+vars.putObject(&quot;header_3&quot;,genHeader(token_3));</stringProp>
+            </BeanShellPreProcessor>
+            <hashTree/>
+          </hashTree>
+        </hashTree>
+        <ModuleController guiclass="ModuleControllerGui" testclass="ModuleController" testname="body" enabled="true">
+          <collectionProp name="ModuleController.node_path">
+            <stringProp name="23750841">工作台</stringProp>
+            <stringProp name="869052411">测试计划</stringProp>
+            <stringProp name="3029410">body</stringProp>
+          </collectionProp>
+        </ModuleController>
+        <hashTree/>
+        <BeanShellSampler guiclass="BeanShellSamplerGui" testclass="BeanShellSampler" testname="AddCustomerAndChilds${group}" enabled="true">
+          <stringProp name="BeanShellSampler.query">//System.out.println(vars.getObject(&quot;response&quot;).getStatusCode()+&quot;:&quot;+vars.getObject(&quot;response&quot;).getString());
+import com.chanjet.pub.HttpCommon;
+import com.chanjet.struct.HttpMethodEnum;
+import com.chanjet.struct.HttpResponse;
+import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson.JSON;
+
+String testData=vars.get(&quot;testData&quot;);
+HttpResponse response=HttpCommon.doHttp(vars.get(&quot;urlString&quot;), 
+HttpMethodEnum.POST,vars.getObject(&quot;header_&quot;+${group}), null, testData.getBytes(), false);
+vars.putObject(&quot;response&quot;,response); 
+if (response.getStatusCode()!=Integer.valueOf(vars.get(&quot;result_code&quot;))) {
+	System.out.println(response.getStatusCode());
+	System.err.println(&quot;error testData:&quot;+vars.get(&quot;testData&quot;));
+}
+//System.out.println(&quot;**********thread group:&quot;+${group}+&quot; send request finish!!!************&quot;);</stringProp>
+          <stringProp name="BeanShellSampler.filename"></stringProp>
+          <stringProp name="BeanShellSampler.parameters"></stringProp>
+          <boolProp name="BeanShellSampler.resetInterpreter">false</boolProp>
+        </BeanShellSampler>
+        <hashTree>
+          <BeanShellPreProcessor guiclass="TestBeanGUI" testclass="BeanShellPreProcessor" testname="BeanShell PreProcessor" enabled="true">
+            <boolProp name="resetInterpreter">false</boolProp>
+            <stringProp name="parameters"></stringProp>
+            <stringProp name="filename"></stringProp>
+            <stringProp name="script">import com.chanjet.pub.HttpCommon;
+import com.chanjet.struct.HttpMethodEnum;
+import com.chanjet.struct.HttpResponse;
+import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson.JSON;
+
+System.out.println(&quot;**********thg:&quot;+${group}+&quot;,thr:&quot;+${__threadNum}+&quot;,count:&quot;+${__counter(,)}+&quot;,header:&quot;+vars.getObject(&quot;header_&quot;+${group})+&quot; prepare to send request************&quot;);
+//System.out.println(&quot;get dataForCustomer:&quot;+vars.getObject(&quot;data&quot;));
+//System.out.println(&quot;get boname:&quot;+vars.get(&quot;boname&quot;));
+//System.out.println(&quot;get boname:&quot;+vars.get(&quot;url&quot;));
+String urlString=&quot;http://&quot;+ vars.get(&quot;ip&quot;)+ &quot;:&quot;+ vars.get(&quot;port&quot;)+&quot;/&quot;
+				+ vars.get(&quot;isvcode&quot;)+&quot;/&quot;
+				+ vars.get(&quot;appname&quot;)
+				+ vars.get(&quot;url&quot;)
+				+ vars.get(&quot;boname&quot;); 
+System.out.println(urlString);
+String testData=JSON.toJSONString(vars.getObject(&quot;data_2&quot;));
+//System.out.println(testData);
+vars.put(&quot;urlString&quot;,urlString); 
+vars.put(&quot;testData&quot;,testData); 
+
+
+</stringProp>
+          </BeanShellPreProcessor>
+          <hashTree/>
+          <BeanShellAssertion guiclass="BeanShellAssertionGui" testclass="BeanShellAssertion" testname="assert" enabled="true">
+            <stringProp name="BeanShellAssertion.query">import com.chanjet.pub.HttpCommon;
+import com.chanjet.struct.HttpMethodEnum;
+import com.chanjet.struct.HttpResponse;
+import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson.JSON;
+
+String result = vars.get(&quot;result_code&quot;);
+HttpResponse response=vars.getObject(&quot;response&quot;);
+//System.out.println(&quot;result:&quot;+result+&quot;,actually:&quot;+response.getStatusCode());
+//System.out.println(response.getStatusCode()+&quot;:&quot;+response.getString());
+if (response.getStatusCode()!=Integer.valueOf(result)) {
+    Failure = true;
+    FailureMessage =&quot;expected:&quot;+result+&quot;,actually:&quot;+response.getStatusCode()+&quot;,response:&quot;+response.getString();
+}
+System.out.println(&quot;Failure:&quot;+Failure);
+//log.info(response.getString());
+</stringProp>
+            <stringProp name="BeanShellAssertion.filename"></stringProp>
+            <stringProp name="BeanShellAssertion.parameters"></stringProp>
+            <boolProp name="BeanShellAssertion.resetInterpreter">false</boolProp>
+          </BeanShellAssertion>
+          <hashTree/>
+          <kg.apc.jmeter.vizualizers.CorrectedResultCollector guiclass="kg.apc.jmeter.vizualizers.TransactionsPerSecondGui" testclass="kg.apc.jmeter.vizualizers.CorrectedResultCollector" testname="jp@gc - Transactions per Second" enabled="true">
+            <boolProp name="ResultCollector.error_logging">false</boolProp>
+            <objProp>
+              <name>saveConfig</name>
+              <value class="SampleSaveConfiguration">
+                <time>true</time>
+                <latency>true</latency>
+                <timestamp>true</timestamp>
+                <success>true</success>
+                <label>true</label>
+                <code>true</code>
+                <message>true</message>
+                <threadName>true</threadName>
+                <dataType>true</dataType>
+                <encoding>false</encoding>
+                <assertions>true</assertions>
+                <subresults>true</subresults>
+                <responseData>false</responseData>
+                <samplerData>false</samplerData>
+                <xml>false</xml>
+                <fieldNames>true</fieldNames>
+                <responseHeaders>false</responseHeaders>
+                <requestHeaders>false</requestHeaders>
+                <responseDataOnError>false</responseDataOnError>
+                <saveAssertionResultsFailureMessage>true</saveAssertionResultsFailureMessage>
+                <assertionsResultsToSave>0</assertionsResultsToSave>
+                <bytes>true</bytes>
+                <threadCounts>true</threadCounts>
+                <idleTime>true</idleTime>
+              </value>
+            </objProp>
+            <stringProp name="filename"></stringProp>
+            <longProp name="interval_grouping">1000</longProp>
+            <boolProp name="graph_aggregated">false</boolProp>
+            <stringProp name="include_sample_labels"></stringProp>
+            <stringProp name="exclude_sample_labels"></stringProp>
+            <stringProp name="start_offset"></stringProp>
+            <stringProp name="end_offset"></stringProp>
+            <boolProp name="include_checkbox_state">false</boolProp>
+            <boolProp name="exclude_checkbox_state">false</boolProp>
+          </kg.apc.jmeter.vizualizers.CorrectedResultCollector>
+          <hashTree/>
+        </hashTree>
+      </hashTree>
+    </hashTree>
+  </hashTree>
+</jmeterTestPlan>
